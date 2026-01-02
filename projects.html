@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | ÉLITE INTERIORS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --cream: #F5F1EB;
+            --beige: #E8E0D5;
+            --soft-grey: #9A9A9A;
+            --charcoal: #2C2C2C;
+            --gold: #C9A961;
+            --gold-light: #D4BC7B;
+            --white: #FFFFFF;
+            --dark-bg: #1A1A1A;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --cream: #1A1A1A;
+            --beige: #2C2C2C;
+            --charcoal: #F5F1EB;
+            --white: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--cream);
+            color: var(--charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px) saturate(120%);
+            -webkit-backdrop-filter: blur(8px) saturate(120%);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        [data-theme="dark"] header {
+            background: rgba(26,26,26,0.45);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            text-decoration: none;
+            letter-spacing: 0.2em;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--charcoal);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            transition: var(--transition);
+            color: var(--charcoal);
+        }
+
+        .theme-toggle:hover {
+            background: var(--charcoal);
+            color: var(--cream);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 2px;
+            background: var(--charcoal);
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--charcoal);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--gold);
+        }
+
+        .page-header {
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(44,44,44,0.8) 0%, rgba(26, 26, 26, 0.701) 100%),
+                        url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW50ZXJpb3IlMjBkZXNpZ258ZW58MHx8MHx8fDA%3D') center/cover;
+        }
+
+        .page-header-content {
+            text-align: center;
+            z-index: 1;
+            color: var(--cream);
+        }
+
+        .page-header-content .section-subtitle {
+            color: var(--gold);
+        }
+
+        .page-header-content h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            margin-top: 1rem;
+        }
+
+        section {
+            padding: 8rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+        }
+
+        .section-line {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 2rem auto;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: 1px solid var(--charcoal);
+            color: var(--charcoal);
+            cursor: pointer;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            transition: var(--transition);
+            font-family: var(--font-sans);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--charcoal);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .project-card.filtered-out {
+            position: absolute;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .project-image {
+            position: relative;
+            height: 260px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(44,44,44,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-overlay span {
+            color: var(--cream);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .project-info {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-info h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info p {
+            color: var(--soft-grey);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--soft-grey);
+        }
+
+        .cta {
+            background: linear-gradient(135deg, rgba(44,44,44,0.95) 0%, rgba(26,26,26,0.95) 100%),
+                        url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920') center/cover fixed;
+            text-align: center;
+            color: var(--cream);
+        }
+
+        .cta h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            color: var(--soft-grey);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-sans);
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--charcoal);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(201, 169, 97, 0.3);
+        }
+
+       footer {
+            background: var(--charcoal);
+            color: var(--cream);
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand .logo {
+            color: var(--cream);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: var(--soft-grey);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border: 1px solid var(--soft-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cream);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .footer-column h4 {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column ul a {
+            color: var(--soft-grey);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-column ul a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: var(--soft-grey);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 5rem 5%;
+            }
+            .nav-links,
+            .theme-toggle {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            /* .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            } */
+            .social-links {
+                justify-content: center;
+            }
+            /* .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            } */
+            .page-header {
+                height: 50vh;
+            }
+            footer {
+        padding: 4rem 1.5rem 2rem;
+    }
+
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    /* Brand section */
+    .footer-brand {
+        max-width: 420px;
+    }
+
+    .footer-brand .logo {
+        display: block;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+    }
+
+    .footer-brand p {
+        line-height: 1.8;
+        margin-bottom: 1.75rem;
+    }
+
+    /* Social icons */
+    .social-links {
+        justify-content: center;
+        gap: 1.25rem;
+    }
+
+    /* ✅ SHOW ONLY QUICK LINKS */
+    .footer-column {
+        display: none;
+    }
+
+    .footer-column:nth-of-type(2) {
+        display: block;
+    }
+
+    .footer-column h4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-column ul li {
+        margin-bottom: 1rem;
+    }
+
+    /* Footer bottom */
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+        margin-top: 2.5rem;
+    }
+        }
+
+        @media (max-width: 480px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">ÉLITE<span>.</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="process.html">Process</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">DARK MODE</button>
+        </nav>
+        <div class="hamburger" role="button" aria-controls="mobile-menu" aria-expanded="false" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="process.html">Process</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <section class="page-header">
+        <div class="page-header-content">
+            <p class="section-subtitle">OUR PORTFOLIO</p>
+            <h1>Featured Projects</h1>
+        </div>
+    </section>
+
+    <section style="background: var(--cream);">
+        <div class="section-header">
+            <p class="section-subtitle">EXPLORE OUR WORK</p>
+            <h2 class="section-title">Interior Excellence</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="living">Living Room</button>
+            <button class="filter-btn" data-filter="bedroom">Bedroom</button>
+            <button class="filter-btn" data-filter="kitchen">Kitchen</button>
+            <button class="filter-btn" data-filter="office">Office</button>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card" data-category="living">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600" alt="Modern Living Room">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Skyline Penthouse</h3>
+                        <p>Contemporary elegance meets urban luxury in this stunning Manhattan residence.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>LIVING ROOM</span>
+                        <span>MY HOME</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="bedroom">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600" alt="Luxury Bedroom">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Serene Master Suite</h3>
+                        <p>A tranquil sanctuary designed for rest and rejuvenation.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>BEDROOM</span>
+                        <span>MADHAPUR</span>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="project-card" data-category="kitchen">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Modern Kitchen">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Culinary Haven</h3>
+                        <p>Where functionality meets sophisticated design in every detail.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>KITCHEN</span>
+                        <span>GACHIBOWLI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="kitchen">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600" alt="Modern Kitchen">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Culinary Haven</h3>
+                        <p>Where functionality meets sophisticated design in every detail.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>KITCHEN</span>
+                        <span>KBHP</span>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+            <div class="project-card" data-category="office">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Executive Office">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Executive Suite</h3>
+                        <p>Productivity and style converge in this modern workspace.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>OFFICE</span>
+                        <span>HITECH CITY</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card" data-category="office">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600" alt="Executive Office">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Executive Suite</h3>
+                        <p>Productivity and style converge in this modern workspace.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>OFFICE</span>
+                        <span>JUBILEE HILLS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="living">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Contemporary Living">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Coastal Retreat</h3>
+                        <p>Bringing the beauty of the ocean indoors with natural textures and light.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>LIVING ROOM</span>
+                        <span>MADHAPUR</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="bedroom">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600" alt="Elegant Bedroom">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Urban Elegance</h3>
+                        <p>Sophisticated comfort in the heart of the city.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>BEDROOM</span>
+                        <span>KBHP</span>
+                    </div>
+                </div>
+            </div>
+
+             <div class="project-card" data-category="bedroom">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Elegant Bedroom">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Urban Elegance</h3>
+                        <p>Sophisticated comfort in the heart of the city.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>BEDROOM</span>
+                        <span>KUKATPALLY</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="kitchen">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=600" alt="White Kitchen">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Minimalist Kitchen</h3>
+                        <p>Clean lines and pristine surfaces create a chef's dream space.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>KITCHEN</span>
+                        <span>KOKAPET</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="office">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=600" alt="Modern Office">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Tech Hub Office</h3>
+                        <p>Innovation-driven design for the modern workplace.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>OFFICE</span>
+                        <span>MINDSPACE</span>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="project-card" data-category="living">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=600" alt="Luxe Living Room">
+                    <div class="project-overlay">
+                        <span>VIEW PROJECT</span>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Grand Living Space</h3>
+                        <p>Timeless elegance with a modern twist for refined living.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span>LIVING ROOM</span>
+                        <span>KONDAPUR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--charcoal); padding: 5rem 5%;">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number" data-target="350">0</span>
+                <span class="stat-label" style="color: var(--soft-grey);">PROJECTS COMPLETED</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="50">0</span>
+                <span class="stat-label" style="color: var(--soft-grey);">CITIES WORLDWIDE</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="1">0</span>
+                <span class="stat-label" style="color: var(--soft-grey);">MILLION SQ.FT. DESIGNED</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="100">0</span>
+                <span class="stat-label" style="color: var(--soft-grey);">SATISFIED CLIENTS</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Have a Project in Mind?</h2>
+        <p>Let's bring your vision to life. Schedule a consultation to discuss your dream space.</p>
+        <a href="contact.html" class="btn btn-primary">START YOUR PROJECT</a>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">ÉLITE<span>.</span></a>
+                <p>Creating exceptional interior spaces that inspire and elevate everyday living. Where luxury meets functionality.</p>
+                <div class="social-links">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+  <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pinterest" viewBox="0 0 16 16">
+  <path d="M8 0a8 8 0 0 0-2.915 15.452c-.07-.633-.134-1.606.027-2.297.146-.625.938-3.977.938-3.977s-.239-.479-.239-1.187c0-1.113.645-1.943 1.448-1.943.682 0 1.012.512 1.012 1.127 0 .686-.437 1.712-.663 2.663-.188.796.4 1.446 1.185 1.446 1.422 0 2.515-1.5 2.515-3.664 0-1.915-1.377-3.254-3.342-3.254-2.276 0-3.612 1.707-3.612 3.471 0 .688.265 1.425.595 1.826a.24.24 0 0 1 .056.23c-.061.252-.196.796-.222.907-.035.146-.116.177-.268.107-1-.465-1.624-1.926-1.624-3.1 0-2.523 1.834-4.84 5.286-4.84 2.775 0 4.932 1.977 4.932 4.62 0 2.757-1.739 4.976-4.151 4.976-.811 0-1.573-.421-1.834-.919l-.498 1.902c-.181.695-.669 1.566-.995 2.097A8 8 0 1 0 8 0"/>
+</svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+</svg>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">Residential Design</a></li>
+                    <li><a href="#">Commercial Design</a></li>
+                    <li><a href="#">Kitchen Design</a></li>
+                    <li><a href="#">Turnkey Projects</a></li>
+                    <li><a href="#">Consultation</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Info</h4>
+                <ul>
+                    <li><a href="tel:+919876543210">+91 9876543210</a></li>
+                    <li><a href="mailto:hello@eliteinteriors.com">hello@eliteinteriors.com</a></li>
+                    <li><a href="contact.html">Hyderabad, Telangana 500032</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p> 2024 Élite Interiors. All rights reserved.</p>
+            <p>Designed with for beautiful spaces</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggleBtn = document.querySelector('.theme-toggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggleBtn.textContent = 'DARK MODE';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.textContent = 'LIGHT MODE';
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        }
+
+        // Project Filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const filterValue = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.classList.remove('filtered-out');
+                    } else {
+                        card.classList.add('filtered-out');
+                    }
+                });
+            });
+        });
+
+        // Stats Counter Animation
+        const statNumbers = document.querySelectorAll('.stat-number');
+
+        statNumbers.forEach(stat => {
+            const updateCount = () => {
+                const target = +stat.getAttribute('data-target');
+                const count = +stat.innerText;
+                const increment = target / 200;
+
+                if (count < target) {
+                    stat.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                } else {
+                    stat.innerText = target;
+                }
+            };
+            updateCount();
+        });
+    </script>
+</body>
+</html>
+   
